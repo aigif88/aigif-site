@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Tareas 2ASIR</title>
+    <style>
+        body {
+            background: #f6f6f6;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background: #024;
+            color: #fff;
+            padding: 18px 0;
+            text-align: center;
+        }
+        main {
+            max-width: 600px;
+            margin: 30px auto;
+            padding: 16px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+        }
+        .tareas {
+            list-style: none;
+            padding: 0;
+        }
+        .tareas li {
+            margin-bottom: 24px;
+            padding: 12px;
+            border-left: 3px solid #e50695;
+            background: #fafafa;
+            border-radius: 8px;
+        }
+        .tareas li a {
+            text-decoration: none;
+            color: #024;
+        }
+        .tareas li a:hover {
+            color: #e50695;
+        }
+        .tareas li strong {
+            font-size: 1.1em;
+        }
+        footer {
+            text-align: center;
+            background: #eee;
+            color: #555;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Tareas 2ASIR</h1>
+    </header>
+    <main>
+        <ul class="tareas">
+            <li>
+                <strong>Tarea 2ASIR. Montar un servidor de IA</strong>
+            </li>
+            <li>
+                <a href="enlace_pdf1.pdf" target="_blank"><strong>Tarea 2ASIR. Desmontar y Montar un PC en el taller</strong></a>
+            </li>
+            <li>
+                <a href="enlace_pdf2.pdf" target="_blank"><strong>Tarea 2ASIR. Desmontar y Montar un servidor y un portátil en el taller</strong></a>
+            </li>
+            <li>
+                <a href="https://enlace-a-tu-web.com" target="_blank"><strong>Tarea 2ASIR. Crear una web estática en Github.</strong></a>
+            </li>
+        </ul>
+    </main>
+    <footer>
+        <p>© 2025 2ASIR</p>
+    </footer>
+</body>
+</html>
