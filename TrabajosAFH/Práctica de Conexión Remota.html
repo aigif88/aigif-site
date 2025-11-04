@@ -6,37 +6,55 @@
     <style>
         body {font-family: Arial, sans-serif; margin: 40px; background: #fafaff;}
         section {margin-bottom: 40px;}
-        h2 {color: #325e88;}
+        h2 {color: #325e88; margin-bottom: 8px;}
+        h3 {color: #21722c; margin-bottom: 5px;}
         img {max-width: 600px; box-shadow: 0 2px 12px #aaa; border: 1px solid #ddd;}
-        .cap {font-size: 0.97em; color: #666; margin-bottom: 8px;}
+        .cap {font-size: 0.96em; color: #666; margin-bottom: 7px;}
     </style>
 </head>
 <body>
     <h1>Práctica de Conexión Remota</h1>
-
+    
     <section>
         <h2>1. SSH en Linux</h2>
-        <div class="cap">Conexión remota con SSH desde otra máquina:</div>
-        <img src="img/ssh.png" alt="Conexión SSH">
+        <h3>a) Crear usuarios</h3>
+        <div class="cap">Añadir un usuario nuevo en Ubuntu:</div>
+        <img src="img/1" alt="Crear usuario SSH">
+        
+        <h3>b) Instalar servidor SSH</h3>
+        <div class="cap">Instalación del servicio SSH:</div>
+        <img src="img/2" alt="Instalar SSH">
+
+        <h3>c) Conexión desde PuTTY (Windows)</h3>
+        <div class="cap">Acceso remoto SSH a Ubuntu con PuTTY desde Windows:</div>
+        <img src="img/3" alt="SSH PuTTY">
+
+        <h3>e) SSH sin contraseña</h3>
+        <div class="cap">Acceso SSH con clave pública configurada:</div>
+        <img src="img/4" alt="SSH sin contraseña">
     </section>
 
     <section>
-        <h2>2. Escritorio remoto en Windows (RDP)</h2>
-        <div class="cap">Apertura de sesión remota RDP desde Remmina hacia Windows:</div>
-        <img src="img/rdp.png" alt="Escritorio remoto RDP">
-        <img src="img/rdp.png" alt="Escritorio remoto RDP">
+        <h2>2. Escritorio remoto Windows (RDP)</h2>
+        <h3>a) Activar RDP en Windows</h3>
+        <div class="cap">Configuración del escritorio remoto en Windows:</div>
+        <img src="img/6" alt="Activar RDP">
+
+        <h3>b) Conexión desde Windows</h3>
+        <div class="cap">Conexión a escritorio remoto desde otro Windows:</div>
+        <img src="img/5" alt="RDP desde Windows">
+
     </section>
 
     <section>
         <h2>3. TeamViewer</h2>
-        <div class="cap">Administración remota y modo presentación con TeamViewer:</div>
-        <img src="img/teamviewer.png" alt="TeamViewer conexión">
-    </section>
+        <h3>a) Administración remota desde Windows</h3>
+        <div class="cap">Control remoto usando TeamViewer de Windows a otra máquina:</div>
+        <img src="img/7" alt="TeamViewer desde Windows">
 
-    <section>
-        <h2>4. Escritorio remoto en Ubuntu (XRDP)</h2>
-        <div class="cap">Sesión gráfica usando XRDP desde Windows:</div>
-        <img src="img/xrdp.png" alt="XRDP conexión">
+        <h3>c) Desde móvil</h3>
+        <div class="cap">Conexión remota o presentación desde la app móvil de TeamViewer:</div>
+        <img src="img/8" alt="TeamViewer móvil">
     </section>
 
 </body>
