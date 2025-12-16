@@ -2,281 +2,143 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Dashboard Comparativa Modelos de IA</title>
-  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script> <!-- Plotly CDN [web:12] -->
+  <title>Comparativa IA: Mac Mini vs PC</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
-    body { font-family: system-ui, sans-serif; margin: 20px; }
-    h1, h2 { text-align: center; }
-    .controls { max-width: 1000px; margin: 0 auto 20px; }
-    .models-list { display: flex; flex-wrap: wrap; gap: 10px; }
-    .models-list label { font-size: 0.9rem; }
-    .chart-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      justify-content: center;
-      margin-bottom: 30px;
-    }
-    .chart {
-      flex: 1 1 450px;
-      max-width: 600px;
-      min-width: 350px;
-      height: 350px;
-    }
-    .tag { font-size: 0.8rem; color: #555; }
+    body { font-family: system-ui, sans-serif; margin: 20px; background:#f5f5f5; }
+    section { background:#fff; padding:20px; margin-bottom:20px; border-radius:8px; }
+    canvas { max-width: 800px; margin: 0 auto; display:block; }
+    h1, h2 { text-align:center; }
   </style>
 </head>
 <body>
-  <h1>Comparativa Interactiva de Modelos de IA</h1>
-  <p style="text-align:center;">
-    Comparativa por <strong>tokens/s</strong>, <strong>coste</strong>, <strong>calidad en acertijos</strong> y
-    rendimiento con <strong>prompts/contextos cortos y largos</strong>.
-  </p>
+  <header>
+    <h1>Comparativa de modelos de IA en Mac Mini y PC</h1>
+  </header>
 
-  <div class="controls">
-    <h2>Selecciona modelos</h2>
-    <div class="models-list" id="modelsList"></div>
-    <p class="tag">Marcando y desmarcando modelos se actualizan todas las gráficas al instante.</p>
-  </div>
+  <main>
+    <!-- Mac Mini -->
+    <section>
+      <h2>Aciertos por IA - Mac Mini</h2>
+      <canvas id="macAciertos"></canvas>
+    </section>
 
-  <div class="chart-row">
-    <div id="chart_tks" class="chart"></div>
-    <div id="chart_cost" class="chart"></div>
-  </div>
+    <!-- PC -->
+    <section>
+      <h2>Aciertos por IA - PC sobremesa</h2>
+      <canvas id="pcAciertos"></canvas>
+    </section>
 
-  <div class="chart-row">
-    <div id="chart_quality" class="chart"></div>
-    <div id="chart_prompt" class="chart"></div>
-  </div>
+    <!-- Comparación directa -->
+    <section>
+      <h2>Mac vs PC por modelo (porcentaje de aciertos)</h2>
+      <canvas id="comparativaAciertos"></canvas>
+    </section>
 
-  <div class="chart-row">
-    <div id="chart_context" class="chart"></div>
-  </div>
+    <!-- Velocidad -->
+    <section>
+      <h2>Velocidad de procesamiento (tokens/segundo)</h2>
+      <canvas id="velocidad"></canvas>
+    </section>
+  </main>
 
   <script>
-    // ================== DATOS (RELLENA CON TUS VALORES) ==================
-    const MODELOS = [
-      // EJEMPLOS: sustituye por tus datos reales de Mac y PC
-      {
-        nombre: "qwen/qwen3-vl-8b (Mac)",
-        plataforma: "Mac Mini",
-        tks: 21.66,
-        ptk: 0.002,
-        accuracy_riddles: 40,
-        short_prompt_tks: 22,
-        long_prompt_tks: 19,
-        short_ctx_tks: 21,
-        long_ctx_tks: 18
-      },
-      {
-        nombre: "google/gemma-2-9b (Mac)",
-        plataforma: "Mac Mini",
-        tks: 16.68,
-        ptk: 0.003,
-        accuracy_riddles: 60,
-        short_prompt_tks: 17,
-        long_prompt_tks: 15,
-        short_ctx_tks: 16,
-        long_ctx_tks: 14
-      },
-      {
-        nombre: "ibm/granite-4-h-tiny (Mac)",
-        plataforma: "Mac Mini",
-        tks: 42.22,
-        ptk: 0.0015,
-        accuracy_riddles: 60,
-        short_prompt_tks: 43,
-        long_prompt_tks: 39,
-        short_ctx_tks: 41,
-        long_ctx_tks: 38
-      },
-      {
-        nombre: "deepseek-r1-8b (PC)",
-        plataforma: "PC",
-        tks: 70.61,
-        ptk: 0.0025,
-        accuracy_riddles: 80,
-        short_prompt_tks: 71,
-        long_prompt_tks: 65,
-        short_ctx_tks: 69,
-        long_ctx_tks: 63
-      },
-      {
-        nombre: "phi-4-mini (PC)",
-        plataforma: "PC",
-        tks: 111.61,
-        ptk: 0.002,
-        accuracy_riddles: 60,
-        short_prompt_tks: 112,
-        long_prompt_tks: 100,
-        short_ctx_tks: 109,
-        long_ctx_tks: 98
-      }
+    // EJEMPLO DE DATOS (cámbialos por los del PDF)
+    const modelos = [
+      "deepseek", "qwen", "gemma", "phi-4", "granite"
     ];
-    // =====================================================================
 
-    // Crear lista de checkboxes
-    const modelsListDiv = document.getElementById("modelsList");
-    MODELOS.forEach((m, idx) => {
-      const id = "model_cb_" + idx;
-      const label = document.createElement("label");
-      const cb = document.createElement("input");
-      cb.type = "checkbox";
-      cb.id = id;
-      cb.value = idx;
-      cb.checked = true; // todos activos al inicio
-      cb.addEventListener("change", updateCharts);
-      label.htmlFor = id;
-      label.innerHTML = `<input type="checkbox" id="${id}" value="${idx}" checked> ${m.nombre} <span class="tag">(${m.plataforma})</span>`;
-      modelsListDiv.appendChild(label);
+    // Mac Mini - porcentajes de acierto
+    const macPct = [40, 40, 60, 20, 60]; // ejemplo
+    // PC - porcentajes de acierto
+    const pcPct  = [80, 60, 80, 60, 40]; // ejemplo
+
+    // Gráfica Mac
+    new Chart(document.getElementById("macAciertos"), {
+      type: "bar",
+      data: {
+        labels: modelos,
+        datasets: [{
+          label: "% aciertos Mac Mini",
+          data: macPct,
+          backgroundColor: "rgba(54, 162, 235, 0.6)",
+          borderColor: "rgba(54, 162, 235, 1)",
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: { beginAtZero: true, max: 100, title:{display:true, text:"Porcentaje de aciertos"} }
+        }
+      }
     });
 
-    // Helper: obtener modelos seleccionados
-    function getSelectedModels() {
-      const selected = [];
-      MODELOS.forEach((m, idx) => {
-        const cb = document.getElementById("model_cb_" + idx);
-        if (cb.checked) selected.push(m);
-      });
-      return selected;
-    }
-
-    // Inicializar todas las gráficas vacías
-    function initCharts() {
-      const layoutBase = { margin: { t: 40, r: 20, b: 60, l: 60 } };
-
-      Plotly.newPlot("chart_tks", [], {
-        ...layoutBase,
-        title: "Tokens por segundo (tk/s)",
-        xaxis: { title: "Modelo" },
-        yaxis: { title: "tk/s" }
-      });
-
-      Plotly.newPlot("chart_cost", [], {
-        ...layoutBase,
-        title: "Coste por 1k tokens (ptk)",
-        xaxis: { title: "Modelo" },
-        yaxis: { title: "Coste (unidades/1k tokens)" }
-      });
-
-      Plotly.newPlot("chart_quality", [], {
-        ...layoutBase,
-        title: "Calidad en acertijos (%)",
-        xaxis: { title: "Modelo" },
-        yaxis: { title: "Aciertos (%)", range: [0, 100] }
-      });
-
-      Plotly.newPlot("chart_prompt", [], {
-        ...layoutBase,
-        title: "tk/s según longitud del prompt",
-        xaxis: { title: "Modelo" },
-        yaxis: { title: "tk/s" },
-        barmode: "group"
-      });
-
-      Plotly.newPlot("chart_context", [], {
-        ...layoutBase,
-        title: "tk/s según longitud del contexto",
-        xaxis: { title: "Modelo" },
-        yaxis: { title: "tk/s" },
-        barmode: "group"
-      });
-    }
-
-    // Actualizar datos en todas las gráficas
-    function updateCharts() {
-      const modelos = getSelectedModels();
-      const nombres = modelos.map(m => m.nombre);
-
-      // 1) tk/s por modelo
-      const tks = modelos.map(m => m.tks);
-      Plotly.react("chart_tks", [{
-        x: nombres,
-        y: tks,
-        type: "bar",
-        marker: { color: "#1f77b4" }
-      }], {
-        title: "Tokens por segundo (tk/s)",
-        xaxis: { title: "Modelo" },
-        yaxis: { title: "tk/s" }
-      });
-
-      // 2) Coste por 1k tokens
-      const cost = modelos.map(m => m.ptk);
-      Plotly.react("chart_cost", [{
-        x: nombres,
-        y: cost,
-        type: "bar",
-        marker: { color: "#ff7f0e" }
-      }], {
-        title: "Coste por 1k tokens (ptk)",
-        xaxis: { title: "Modelo" },
-        yaxis: { title: "Coste (unidades/1k tokens)" }
-      });
-
-      // 3) Calidad en acertijos
-      const acc = modelos.map(m => m.accuracy_riddles);
-      Plotly.react("chart_quality", [{
-        x: nombres,
-        y: acc,
-        type: "bar",
-        marker: { color: "#2ca02c" }
-      }], {
-        title: "Calidad en acertijos (%)",
-        xaxis: { title: "Modelo" },
-        yaxis: { title: "Aciertos (%)", range: [0, 100] }
-      });
-
-      // 4) tk/s con prompts cortos vs largos
-      const shortPrompt = modelos.map(m => m.short_prompt_tks);
-      const longPrompt = modelos.map(m => m.long_prompt_tks);
-      Plotly.react("chart_prompt", [
-        {
-          x: nombres,
-          y: shortPrompt,
-          name: "Prompt corto",
-          type: "bar"
-        },
-        {
-          x: nombres,
-          y: longPrompt,
-          name: "Prompt largo",
-          type: "bar"
+    // Gráfica PC
+    new Chart(document.getElementById("pcAciertos"), {
+      type: "bar",
+      data: {
+        labels: modelos,
+        datasets: [{
+          label: "% aciertos PC",
+          data: pcPct,
+          backgroundColor: "rgba(255, 99, 132, 0.6)",
+          borderColor: "rgba(255, 99, 132, 1)",
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: { beginAtZero: true, max: 100, title:{display:true, text:"Porcentaje de aciertos"} }
         }
-      ], {
-        title: "tk/s según longitud del prompt",
-        xaxis: { title: "Modelo" },
-        yaxis: { title: "tk/s" },
-        barmode: "group"
-      });
+      }
+    });
 
-      // 5) tk/s con contexto corto vs largo
-      const shortCtx = modelos.map(m => m.short_ctx_tks);
-      const longCtx = modelos.map(m => m.long_ctx_tks);
-      Plotly.react("chart_context", [
-        {
-          x: nombres,
-          y: shortCtx,
-          name: "Contexto corto",
-          type: "bar"
-        },
-        {
-          x: nombres,
-          y: longCtx,
-          name: "Contexto largo",
-          type: "bar"
+    // Comparativa Mac vs PC
+    new Chart(document.getElementById("comparativaAciertos"), {
+      type: "bar",
+      data: {
+        labels: modelos,
+        datasets: [
+          {
+            label: "Mac Mini",
+            data: macPct,
+            backgroundColor: "rgba(54, 162, 235, 0.6)"
+          },
+          {
+            label: "PC sobremesa",
+            data: pcPct,
+            backgroundColor: "rgba(255, 99, 132, 0.6)"
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: { beginAtZero: true, max: 100, title:{display:true, text:"Porcentaje de aciertos"} }
         }
-      ], {
-        title: "tk/s según longitud del contexto",
-        xaxis: { title: "Modelo" },
-        yaxis: { title: "tk/s" },
-        barmode: "group"
-      });
-    }
+      }
+    });
 
-    // Inicialización
-    initCharts();
-    updateCharts();
+    // Velocidad de procesamiento
+    new Chart(document.getElementById("velocidad"), {
+      type: "bar",
+      data: {
+        labels: ["Mac Mini", "PC sobremesa"],
+        datasets: [{
+          label: "Tokens/segundo (promedio aproximado)",
+          data: [32, 90], // ejemplo a partir de los rangos
+          backgroundColor: ["rgba(54, 162, 235, 0.6)", "rgba(255, 99, 132, 0.6)"]
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: { beginAtZero: true, title:{display:true, text:"Tokens/segundo"} }
+        }
+      }
+    });
   </script>
 </body>
 </html>
