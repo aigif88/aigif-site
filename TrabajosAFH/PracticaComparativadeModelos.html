@@ -2,143 +2,461 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Comparativa IA: Mac Mini vs PC</title>
+  <title>Comparativa de modelos de IA en Mac Mini y PC</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
-    body { font-family: system-ui, sans-serif; margin: 20px; background:#f5f5f5; }
-    section { background:#fff; padding:20px; margin-bottom:20px; border-radius:8px; }
-    canvas { max-width: 800px; margin: 0 auto; display:block; }
-    h1, h2 { text-align:center; }
+    body { 
+      font-family: system-ui, sans-serif; 
+      margin: 0; 
+      padding: 20px; 
+      background:#f5f5f5; 
+    }
+    header { 
+      text-align:center; 
+      margin-bottom:20px; 
+    }
+    section { 
+      background:#fff; 
+      padding:30px; 
+      margin:20px auto; 
+      border-radius:8px; 
+      box-shadow:0 2px 4px rgba(0,0,0,0.05); 
+      max-width: 1200px; 
+    }
+    canvas { 
+      width: 100% !important; 
+      height: 450px !important; 
+      display:block; 
+    }
+    h1, h2 { 
+      text-align:center; 
+      margin-top:0; 
+    }
+    h3 {
+      margin-top:20px;
+    }
+    p { 
+      max-width:1000px; 
+      margin:10px auto 0 auto; 
+      text-align:center; 
+    }
   </style>
 </head>
 <body>
   <header>
-    <h1>Comparativa de modelos de IA en Mac Mini y PC</h1>
+    <h1>Comparativa de modelos de IA en Mac Mini y PC sobremesa</h1>
+    <p>Visualización interactiva de aciertos, tokens totales y tiempos de respuesta para varios modelos de IA ejecutados en Mac Mini y PC.</p>
   </header>
 
   <main>
-    <!-- Mac Mini -->
+    <!-- ADIVINANZAS USADAS -->
+    <section>
+      <h2>Adivinanzas utilizadas</h2>
+      <p>Estas son las adivinanzas que se han usado para evaluar los modelos de IA en Mac Mini y PC sobremesa.</p>
+
+      <h3>Adivinanza 1: Los Galones</h3>
+      <p><strong>Enunciado:</strong> Un lechero tiene 2 botellas vacías, una de 3 galones y una de 5 galones. Él quiere medir 1 galón exacto. ¿Cómo puede hacer eso?</p>
+      <p><strong>Respuesta correcta:</strong> Llenar la botella de 3 galones y verterla en la de 5; volver a llenar la de 3 y seguir llenando la de 5 hasta llenarla. En la botella de 3 quedan exactamente 1 galón.</p>
+
+      <h3>Adivinanza 2: El Secreto</h3>
+      <p><strong>Enunciado:</strong> Si me tienes, me quieres compartir. Si me compartes, ya no me tienes. ¿Qué soy?</p>
+      <p><strong>Respuesta correcta:</strong> Un secreto.</p>
+
+      <h3>Adivinanza 3: La Fragilidad</h3>
+      <p><strong>Enunciado:</strong> ¿Qué es tan frágil que cuando dices su nombre lo rompes?</p>
+      <p><strong>Respuesta correcta:</strong> El silencio.</p>
+
+      <h3>Adivinanza 4: La Contradicción</h3>
+      <p><strong>Enunciado:</strong> Dame comida y viviré. Dame agua y moriré. ¿Qué soy?</p>
+      <p><strong>Respuesta correcta:</strong> El fuego.</p>
+
+      <h3>Adivinanza 5: La Ligereza</h3>
+      <p><strong>Enunciado:</strong> Soy más ligero que una pluma, aun así el más fuerte de los hombres no puede aguantarme por más de dos minutos. ¿Qué soy?</p>
+      <p><strong>Respuesta correcta:</strong> El aliento (o el aire).</p>
+    </section>
+
+    <!-- ACIERTOS -->
     <section>
       <h2>Aciertos por IA - Mac Mini</h2>
+      <p>Número de acertijos resueltos correctamente y porcentaje de acierto por cada modelo ejecutado en el Mac Mini.</p>
       <canvas id="macAciertos"></canvas>
     </section>
 
-    <!-- PC -->
     <section>
       <h2>Aciertos por IA - PC sobremesa</h2>
+      <p>Número de acertijos resueltos correctamente y porcentaje de acierto por cada modelo ejecutado en el PC sobremesa.</p>
       <canvas id="pcAciertos"></canvas>
     </section>
 
-    <!-- Comparación directa -->
     <section>
-      <h2>Mac vs PC por modelo (porcentaje de aciertos)</h2>
+      <h2>Comparación Mac vs PC por modelo (% aciertos)</h2>
+      <p>Porcentaje de aciertos de cada modelo comparando Mac Mini y PC sobremesa.</p>
       <canvas id="comparativaAciertos"></canvas>
     </section>
 
-    <!-- Velocidad -->
+    <!-- VELOCIDAD GLOBAL -->
     <section>
-      <h2>Velocidad de procesamiento (tokens/segundo)</h2>
-      <canvas id="velocidad"></canvas>
+      <h2>Velocidad media de generación (tokens/segundo)</h2>
+      <p>Rangos de velocidad de generación de tokens por segundo en Mac Mini y PC sobremesa.</p>
+      <canvas id="velocidadGlobal"></canvas>
+    </section>
+
+    <!-- TOKENS TOTALES POR ADIVINANZA -->
+    <section>
+      <h2>Tokens totales por IA y adivinanza (Mac Mini)</h2>
+      <p>Tokens generados por cada modelo en cada adivinanza ejecutada en el Mac Mini.</p>
+      <canvas id="macTokensPorAdivinanza" style="height:550px;"></canvas>
+    </section>
+
+    <section>
+      <h2>Tokens totales por IA y adivinanza (PC sobremesa)</h2>
+      <p>Tokens generados por cada modelo en cada adivinanza ejecutada en el PC sobremesa.</p>
+      <canvas id="pcTokensPorAdivinanza" style="height:550px;"></canvas>
+    </section>
+
+    <!-- TIEMPO AL PRIMER TOKEN -->
+    <section>
+      <h2>Tiempo al primer token por modelo (Mac vs PC)</h2>
+      <p>Comparación del tiempo al primer token (en segundos) para cada modelo en Mac Mini y PC sobremesa.</p>
+      <canvas id="tiempoPrimerToken"></canvas>
     </section>
   </main>
 
   <script>
-    // EJEMPLO DE DATOS (cámbialos por los del PDF)
-    const modelos = [
-      "deepseek", "qwen", "gemma", "phi-4", "granite"
+    // =========================
+    // DATOS BASE
+    // =========================
+
+    const modelosFullMac = [
+      "qwen/qwen3-vl-8b",
+      "google/gemma-2-9b",
+      "ibm/granite-4-h-tiny",
+      "deepseek/deepseek-r1-0528-qwen3-8b",
+      "microsoft/phi-4-mini-reasoning"
     ];
 
-    // Mac Mini - porcentajes de acierto
-    const macPct = [40, 40, 60, 20, 60]; // ejemplo
-    // PC - porcentajes de acierto
-    const pcPct  = [80, 60, 80, 60, 40]; // ejemplo
+    const modelosFullPC = [
+      "deepseek/deepseek-r1-0528-qwen3-8b",
+      "microsoft/phi-4-mini-reasoning",
+      "qwen/qwen3-v1-8b",
+      "google/gemma-2-9b",
+      "ibm/granite-4-h-tiny"
+    ];
 
-    // Gráfica Mac
+    // =========================
+    // ACIERTOS (RESUMEN FINAL) [file:1]
+    // =========================
+    // Mac Mini (resumen):
+    // deepseek 4/5 80%, qwen 3/5 60%, gemma 4/5 80%, phi 3/5 60%, granite 2/5 40% [file:1]
+    const macAciertosNum = [4, 3, 4, 3, 2];
+    const macAciertosPct = [80, 60, 80, 60, 40];
+
+    // Ordenar a modelosFullMac: qwen, gemma, granite, deepseek, phi
+    const macAciertosNumOrdenado = [3, 4, 2, 4, 3];
+    const macAciertosPctOrdenado = [60, 80, 40, 80, 60];
+
+    // PC sobremesa (resumen):
+    // granite 3/5 60%, qwen 2/5 40%, gemma 3/5 60%, deepseek 2/5 40%, phi 1/5 20% [file:1]
+    // Reordenamos a modelosFullPC: deepseek, phi, qwen, gemma, granite
+    const pcAciertosNumOrdenado = [2, 1, 2, 3, 3];
+    const pcAciertosPctOrdenado = [40, 20, 40, 60, 60];
+
+    // =========================
+    // VELOCIDAD GLOBAL TOKENS/SEG [file:1]
+    // =========================
+    const velocidadMacMin = 22.14;
+    const velocidadMacMax = 42.22;
+    const velocidadMacMedia = (velocidadMacMin + velocidadMacMax) / 2;
+
+    const velocidadPcMin = 57.42;
+    const velocidadPcMax = 118.62;
+    const velocidadPcMedia = (velocidadPcMin + velocidadPcMax) / 2;
+
+    // =========================
+    // TOKENS TOTALES POR ADIVINANZA (MAC) [file:1]
+    // Orden de modelosFullMac:
+    // 0: qwen/qwen3-vl-8b
+    // 1: google/gemma-2-9b
+    // 2: ibm/granite-4-h-tiny
+    // 3: deepseek/deepseek-r1-0528-qwen3-8b
+    // 4: microsoft/phi-4-mini-reasoning
+
+    const macTokensA1 = [828, 225, 221, 2794, 1124]; // Los Galones [file:1]
+    const macTokensA2 = [289, 90, 43, 2807, 2285];  // El Secreto [file:1]
+    const macTokensA3 = [289, 47, 74, 3580, 1236];  // La Fragilidad [file:1]
+    const macTokensA4 = [680, 70, 47, 529, 1063];   // La Contradicción [file:1]
+    const macTokensA5 = [259, 91, 54, 2605, 4072];  // La Ligereza [file:1]
+
+    // =========================
+    // TOKENS TOTALES POR ADIVINANZA (PC) [file:1]
+    // Orden de modelosFullPC:
+    // 0: deepseek/deepseek-r1-0528-qwen3-8b
+    // 1: microsoft/phi-4-mini-reasoning
+    // 2: qwen/qwen3-v1-8b
+    // 3: google/gemma-2-9b
+    // 4: ibm/granite-4-h-tiny
+
+    const pcTokensA1 = [4930, 4438, 755, 87, 232];  // Los Galones [file:1]
+    const pcTokensA2 = [2583, 0, 292, 87, 66];      // El Secreto (phi sin datos -> 0) [file:1]
+    const pcTokensA3 = [322, 1785, 268, 28, 71];    // La Fragilidad [file:1]
+    const pcTokensA4 = [2038, 3558, 212, 72, 126];  // La Contradicción [file:1]
+    const pcTokensA5 = [1701, 6091, 258, 88, 53];   // La Ligereza [file:1]
+
+    // =========================
+    // TIEMPO AL PRIMER TOKEN (APROX) [file:1]
+    // =========================
+    const macTiempoPrimerTokenAprox = [1.0, 0.27, 0.81, 0.79, 0.35];
+    const pcTiempoPrimerTokenAprox = [0.03, 0.02, 0.03, 0.18, 0.15];
+
+    // Para comparativa común
+    const modelosComparativa = [
+      "deepseek/deepseek-r1-0528-qwen3-8b",
+      "microsoft/phi-4-mini-reasoning",
+      "qwen/qwen3-vl-8b / v1-8b",
+      "google/gemma-2-9b",
+      "ibm/granite-4-h-tiny"
+    ];
+    const macPctComparativa = [80, 60, 60, 80, 40];
+    const pcPctComparativa  = [40, 20, 40, 60, 60];
+
+    // =========================
+    // GRÁFICAS
+    // =========================
+
+    // Aciertos Mac
     new Chart(document.getElementById("macAciertos"), {
       type: "bar",
       data: {
-        labels: modelos,
-        datasets: [{
-          label: "% aciertos Mac Mini",
-          data: macPct,
-          backgroundColor: "rgba(54, 162, 235, 0.6)",
-          borderColor: "rgba(54, 162, 235, 1)",
-          borderWidth: 1
-        }]
-      },
-      options: {
-        responsive: true,
-        scales: {
-          y: { beginAtZero: true, max: 100, title:{display:true, text:"Porcentaje de aciertos"} }
-        }
-      }
-    });
-
-    // Gráfica PC
-    new Chart(document.getElementById("pcAciertos"), {
-      type: "bar",
-      data: {
-        labels: modelos,
-        datasets: [{
-          label: "% aciertos PC",
-          data: pcPct,
-          backgroundColor: "rgba(255, 99, 132, 0.6)",
-          borderColor: "rgba(255, 99, 132, 1)",
-          borderWidth: 1
-        }]
-      },
-      options: {
-        responsive: true,
-        scales: {
-          y: { beginAtZero: true, max: 100, title:{display:true, text:"Porcentaje de aciertos"} }
-        }
-      }
-    });
-
-    // Comparativa Mac vs PC
-    new Chart(document.getElementById("comparativaAciertos"), {
-      type: "bar",
-      data: {
-        labels: modelos,
+        labels: modelosFullMac,
         datasets: [
           {
-            label: "Mac Mini",
-            data: macPct,
-            backgroundColor: "rgba(54, 162, 235, 0.6)"
+            label: "Aciertos (Mac Mini)",
+            data: macAciertosNumOrdenado,
+            backgroundColor: "rgba(54, 162, 235, 0.7)"
           },
           {
-            label: "PC sobremesa",
-            data: pcPct,
-            backgroundColor: "rgba(255, 99, 132, 0.6)"
+            label: "% aciertos (Mac Mini)",
+            data: macAciertosPctOrdenado,
+            backgroundColor: "rgba(54, 162, 235, 0.3)",
+            yAxisID: "y1"
           }
         ]
       },
       options: {
         responsive: true,
+        maintainAspectRatio: false,
         scales: {
-          y: { beginAtZero: true, max: 100, title:{display:true, text:"Porcentaje de aciertos"} }
+          y: {
+            beginAtZero: true,
+            title: { display: true, text: "Aciertos" }
+          },
+          y1: {
+            beginAtZero: true,
+            position: "right",
+            title: { display: true, text: "Porcentaje (%)" },
+            grid: { drawOnChartArea: false },
+            min: 0,
+            max: 100
+          }
         }
       }
     });
 
-    // Velocidad de procesamiento
-    new Chart(document.getElementById("velocidad"), {
+    // Aciertos PC
+    new Chart(document.getElementById("pcAciertos"), {
       type: "bar",
       data: {
-        labels: ["Mac Mini", "PC sobremesa"],
-        datasets: [{
-          label: "Tokens/segundo (promedio aproximado)",
-          data: [32, 90], // ejemplo a partir de los rangos
-          backgroundColor: ["rgba(54, 162, 235, 0.6)", "rgba(255, 99, 132, 0.6)"]
-        }]
+        labels: modelosFullPC,
+        datasets: [
+          {
+            label: "Aciertos (PC sobremesa)",
+            data: pcAciertosNumOrdenado,
+            backgroundColor: "rgba(255, 99, 132, 0.7)"
+          },
+          {
+            label: "% aciertos (PC sobremesa)",
+            data: pcAciertosPctOrdenado,
+            backgroundColor: "rgba(255, 99, 132, 0.3)",
+            yAxisID: "y1"
+          }
+        ]
       },
       options: {
         responsive: true,
+        maintainAspectRatio: false,
         scales: {
-          y: { beginAtZero: true, title:{display:true, text:"Tokens/segundo"} }
+          y: {
+            beginAtZero: true,
+            title: { display: true, text: "Aciertos" }
+          },
+          y1: {
+            beginAtZero: true,
+            position: "right",
+            title: { display: true, text: "Porcentaje (%)" },
+            grid: { drawOnChartArea: false },
+            min: 0,
+            max: 100
+          }
         }
       }
     });
+
+    // Comparativa Mac vs PC (% aciertos)
+    new Chart(document.getElementById("comparativaAciertos"), {
+      type: "bar",
+      data: {
+        labels: modelosComparativa,
+        datasets: [
+          {
+            label: "% aciertos Mac Mini",
+            data: macPctComparativa,
+            backgroundColor: "rgba(54, 162, 235, 0.7)"
+          },
+          {
+            label: "% aciertos PC sobremesa",
+            data: pcPctComparativa,
+            backgroundColor: "rgba(255, 99, 132, 0.7)"
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 100,
+            title: { display: true, text: "Porcentaje de aciertos (%)" }
+          }
+        }
+      }
+    });
+
+    // Velocidad media global (tokens/seg)
+    new Chart(document.getElementById("velocidadGlobal"), {
+      type: "bar",
+      data: {
+        labels: ["Mac Mini", "PC sobremesa"],
+        datasets: [
+          {
+            label: "Velocidad media (tokens/segundo)",
+            data: [velocidadMacMedia, velocidadPcMedia],
+            backgroundColor: ["rgba(54, 162, 235, 0.7)", "rgba(255, 99, 132, 0.7)"]
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: { display: true, text: "Tokens por segundo" }
+          }
+        },
+        plugins: {
+          tooltip: {
+            callbacks: {
+              afterBody: function(context) {
+                const index = context[0].dataIndex;
+                const min = index === 0 ? velocidadMacMin : velocidadPcMin;
+                const max = index === 0 ? velocidadMacMax : velocidadPcMax;
+                return "Rango aproximado: " + min.toFixed(2) + " - " + max.toFixed(2) + " tok/s";
+              }
+            }
+          }
+        }
+      }
+    });
+
+    // Tokens totales por adivinanza (Mac) - barras apiladas
+    new Chart(document.getElementById("macTokensPorAdivinanza"), {
+      type: "bar",
+      data: {
+        labels: modelosFullMac,
+        datasets: [
+          { label: "Adivinanza 1", data: macTokensA1, backgroundColor: "rgba(54,162,235,0.7)" },
+          { label: "Adivinanza 2", data: macTokensA2, backgroundColor: "rgba(75,192,192,0.7)" },
+          { label: "Adivinanza 3", data: macTokensA3, backgroundColor: "rgba(153,102,255,0.7)" },
+          { label: "Adivinanza 4", data: macTokensA4, backgroundColor: "rgba(255,159,64,0.7)" },
+          { label: "Adivinanza 5", data: macTokensA5, backgroundColor: "rgba(255,205,86,0.7)" }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          x: { stacked: true },
+          y: {
+            stacked: true,
+            beginAtZero: true,
+            title: { display: true, text: "Tokens totales" }
+          }
+        }
+      }
+    });
+
+    // Tokens totales por adivinanza (PC) - barras apiladas
+    new Chart(document.getElementById("pcTokensPorAdivinanza"), {
+      type: "bar",
+      data: {
+        labels: modelosFullPC,
+        datasets: [
+          { label: "Adivinanza 1", data: pcTokensA1, backgroundColor: "rgba(54,162,235,0.7)" },
+          { label: "Adivinanza 2", data: pcTokensA2, backgroundColor: "rgba(75,192,192,0.7)" },
+          { label: "Adivinanza 3", data: pcTokensA3, backgroundColor: "rgba(153,102,255,0.7)" },
+          { label: "Adivinanza 4", data: pcTokensA4, backgroundColor: "rgba(255,159,64,0.7)" },
+          { label: "Adivinanza 5", data: pcTokensA5, backgroundColor: "rgba(255,205,86,0.7)" }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          x: { stacked: true },
+          y: {
+            stacked: true,
+            beginAtZero: true,
+            title: { display: true, text: "Tokens totales" }
+          }
+        }
+      }
+    });
+
+    // Tiempo al primer token (línea) comparando Mac vs PC
+    new Chart(document.getElementById("tiempoPrimerToken"), {
+      type: "line",
+      data: {
+        labels: modelosComparativa,
+        datasets: [
+          {
+            label: "Mac Mini (aprox.)",
+            data: macTiempoPrimerTokenAprox,
+            borderColor: "rgba(54,162,235,1)",
+            backgroundColor: "rgba(54,162,235,0.2)",
+            tension: 0.2
+          },
+          {
+            label: "PC sobremesa (aprox.)",
+            data: pcTiempoPrimerTokenAprox,
+            borderColor: "rgba(255,99,132,1)",
+            backgroundColor: "rgba(255,99,132,0.2)",
+            tension: 0.2
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: { display: true, text: "Segundos" }
+          }
+        }
+      }
+    });
+
   </script>
 </body>
 </html>
