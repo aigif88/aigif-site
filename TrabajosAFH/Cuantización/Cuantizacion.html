@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reporte Cuantización Llama.cpp - ASIR</title>
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --text-color: #c9d1d9;
+            --accent-color: #d29922; /* Color naranja amarillento */
+            --card-bg: #161b22;
+            --border-color: #30363d;
+            --success-color: #238636;
+            --info-color: #1f6feb;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 0;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            color: var(--accent-color);
+            margin-bottom: 10px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .step-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            margin-bottom: 40px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+
+        .step-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            background-color: #21262d;
+        }
+
+        .step-number {
+            background-color: var(--accent-color);
+            color: #fff;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+
+        .step-title {
+            font-weight: 600;
+            font-size: 1.1em;
+            color: #fff;
+        }
+
+        .step-content {
+            padding: 20px;
+        }
+
+        .step-description {
+            margin-bottom: 20px;
+            font-size: 0.95em;
+        }
+
+        .terminal-img {
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+            display: block;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.75em;
+            font-weight: 600;
+            margin-left: auto;
+        }
+
+        .tag-setup { background-color: var(--info-color); color: #fff; }
+        .tag-process { background-color: #8b949e; color: #fff; }
+        .tag-result { background-color: var(--success-color); color: #fff; }
+
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            color: #8b949e;
+            font-size: 0.8em;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Práctica Cuantización con llama.cpp</h1>
+        <p>Optimización y conversión de modelos GGUF para inferencia local</p>
+        <p style="font-size: 0.9em; color: #8b949e;">Módulo: ASIR | Herramienta: llama.cpp</p>
+    </header>
+
+    <!-- Paso 1: Archivos -->
+    <div class="step-card">
+        <div class="step-header">
+            <span class="step-number">1</span>
+            <span class="step-title">Preparación de Modelos</span>
+            <span class="tag tag-setup">Setup</span>
+        </div>
+        <div class="step-content">
+            <p class="step-description">
+                Verificación de los archivos iniciales. Disponemos del modelo <code>qwen2.5-0.5b-instruct</code> tanto en formato fp16 (precisión completa) como una versión ya cuantizada previamente (q4_k_m).
+            </p>
+            <img src="img/1.jpeg" alt="Lista de archivos GGUF" class="terminal-img">
+        </div>
+    </div>
+
+    <!-- Paso 2: Conversión -->
+    <div class="step-card">
+        <div class="step-header">
+            <span class="step-number">2</span>
+            <span class="step-title">Proceso de Cuantización</span>
+            <span class="tag tag-process">Proceso</span>
+        </div>
+        <div class="step-content">
+            <p class="step-description">
+                Ejecución de la herramienta de conversión para transformar el modelo a formato <code>q5_0</code>. Se observa cómo se procesan los tensores bloque a bloque, reduciendo el tamaño del modelo de 1.2GB a aproximadamente 460MB.
+            </p>
+            <img src="img/2.jpeg" alt="Proceso de cuantización en terminal" class="terminal-img">
+        </div>
+    </div>
+
+    <!-- Paso 3: Llama.cpp Build -->
+    <div class="step-card">
+        <div class="step-header">
+            <span class="step-number">3</span>
+            <span class="step-title">Entorno de Ejecución (Build)</span>
+            <span class="tag tag-setup">Configuración</span>
+        </div>
+        <div class="step-content">
+            <p class="step-description">
+                Verificación del entorno <code>llama.cpp</code> compilado (build b3557). Se carga el modelo cuantizado <code>qwen2.5-0.5b-instruct-q4_k_m.gguf</code> listo para recibir comandos e instrucciones.
+            </p>
+            <img src="img/3.jpeg" alt="Build de llama.cpp cargado" class="terminal-img">
+        </div>
+    </div>
+
+    <!-- Paso 4: Inferencia Original -->
+    <div class="step-card">
+        <div class="step-header">
+            <span class="step-number">4</span>
+            <span class="step-title">Prueba 1: Modelo Qwen Original</span>
+            <span class="tag tag-result">Resultado</span>
+        </div>
+        <div class="step-content">
+            <p class="step-description">
+                Prueba de inferencia preguntando "¿qué es la administración de sistemas?". El modelo genera una respuesta detallada con 10 puntos clave, mostrando buena coherencia y profundidad técnica.
+            </p>
+            <img src="img/4.jpeg" alt="Respuesta del modelo original" class="terminal-img">
+        </div>
+    </div>
+
+    <!-- Paso 5: Inferencia Cuantizada -->
+    <div class="step-card">
+        <div class="step-header">
+            <span class="step-number">5</span>
+            <span class="step-title">Prueba 2: Modelo Cuantizado</span>
+            <span class="tag tag-result">Resultado</span>
+        </div>
+        <div class="step-content">
+            <p class="step-description">
+                Misma pregunta al modelo cuantizado. La respuesta mantiene la estructura de 10 puntos y la calidad técnica es muy similar al original, demostrando que la pérdida de precisión apenas afecta a la calidad de la respuesta en este caso.
+            </p>
+            <img src="img/5.jpeg" alt="Respuesta del modelo cuantizado" class="terminal-img">
+        </div>
+    </div>
+
+    <!-- Paso 6: Prueba Rápida -->
+    <div class="step-card">
+        <div class="step-header">
+            <span class="step-number">6</span>
+            <span class="step-title">Prueba de Velocidad (Tokens/s)</span>
+            <span class="tag tag-result">Benchmark</span>
+        </div>
+        <div class="step-content">
+            <p class="step-description">
+                Prueba final solicitando una definición corta de "Servidor DNS". El modelo responde correctamente a una velocidad muy alta de generación (174 tokens/segundo en el prompt), confirmando la eficiencia del modelo cuantizado.
+            </p>
+            <img src="img/6.jpeg" alt="Prueba DNS y velocidad" class="terminal-img">
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 - Prácticas ASIR | Inteligencia Artificial</p>
+    </footer>
+</div>
+
+</body>
+</html>
