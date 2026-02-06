@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reporte Fine-Tuning Gemma - ASIR</title>
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --text-color: #c9d1d9;
+            --accent-color: #58a6ff;
+            --card-bg: #161b22;
+            --border-color: #30363d;
+            --success-color: #238636;
+            --error-color: #da3633;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 0;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            color: var(--accent-color);
+            margin-bottom: 10px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .step-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            margin-bottom: 40px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+
+        .step-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            background-color: #21262d;
+        }
+
+        .step-number {
+            background-color: var(--accent-color);
+            color: #fff;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+
+        .step-title {
+            font-weight: 600;
+            font-size: 1.1em;
+            color: #fff;
+        }
+
+        .step-content {
+            padding: 20px;
+        }
+
+        .step-description {
+            margin-bottom: 20px;
+            font-size: 0.95em;
+        }
+
+        .terminal-img {
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+            display: block;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.75em;
+            font-weight: 600;
+            margin-left: auto;
+        }
+
+        .tag-setup { background-color: #1f6feb; color: #fff; }
+        .tag-error { background-color: var(--error-color); color: #fff; }
+        .tag-fix { background-color: #d29922; color: #fff; }
+        .tag-success { background-color: var(--success-color); color: #fff; }
+
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            color: #8b949e;
+            font-size: 0.8em;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Proyecto Fine-Tuning LLM</h1>
+        <p>Documentación del proceso de reentrenamiento de Gemma-2 270m con LoRA</p>
+        <p style="font-size: 0.9em; color: #8b949e;">Módulo: ASIR | Entorno: Mac/Linux (zsh)</p>
+    </header>
+
+    <!-- Paso 1: Entorno -->
+    <div class="step-card">
+        <div class="step-header">
+            <span class="step-number">1</span>
+            <span class="step-title">Preparación del Entorno Virtual</span>
+            <span class="tag tag-setup">Setup</span>
+        </div>
+        <div class="step-content">
+            <p class="step-description">
+                Creación del entorno virtual de Python (<code>venv</code>) e instalación de las librerías necesarias: <code>mlx-lm</code>, <code>datasets</code>, <code>huggingface_hub</code> y <code>accelerate</code>.
+            </p>
+            <img src="img/1.jpg" alt="Instalación de librerías" class="terminal-img">
+        </div>
+    </div>
+
+    <!-- Paso 2: Auth -->
+    <div class="step-card">
+        <div class="step-header">
+            <span class="step-number">2</span>
+            <span class="step-title">Autenticación en Hugging Face</span>
+            <span class="tag tag-setup">Auth</span>
+        </div>
+        <div class="step-content">
+            <p class="step-description">
+                Inicio de sesión en el hub de Hugging Face para poder descargar los modelos base. Se utiliza el token de acceso personal.
+            </p>
+            <img src="img/2.jpg" alt="Login Hugging Face" class="terminal-img">
+        </div>
+    </div>
+
+    <!-- Paso 3: Selección -->
+    <div class="step-card">
+        <div class="step-header">
+            <span class="step-number">3</span>
+            <span class="step-title">Selección del Modelo Base</span>
+            <span class="tag tag-setup">Investigación</span>
+        </div>
+        <div class="step-content">
+            <p class="step-description">
+                Elección del modelo <code>gemma-3-270m-it</code> (versión instruct) optimizado para MLX, ideal para pruebas rápidas de fine-tuning.
+            </p>
+            <img src="img/3.jpg" alt="Selección de modelo" class="terminal-img">
+        </div>
+    </div>
+
+    <!-- Paso 4: Creación Datos -->
+    <div class="step-card">
+        <div class="step-header">
+            <span class="step-number">4</span>
+            <span class="step-title">Creación del Dataset Inicial</span>
+            <span class="tag tag-setup">Data</span>
+        </div>
+        <div class="step-content">
+            <p class="step-description">
+                Generación manual de los archivos <code>train.jsonl</code> y <code>valid.jsonl</code> con formato conversacional (role: user/assistant) específico para ASIR.
+            </p>
+            <img src="img/4.jpg" alt="Creación de dataset JSONL" class="terminal-img">
+        </div>
+    </div>
+
+    <!-- Paso 5: Error Index -->
+    <div class="step-card">
+        <div class="step-header">
+            <span class="step-number">5</span>
+            <span class="step-title">Error de Carga: IndexError</span>
+            <span class="tag tag-error">Error</span>
+        </div>
+        <div class="step-content">
+            <p class="step-description">
+                Primer intento fallido. El script arroja un <code>IndexError: list index out of range</code>, indicando que el dataset no se estaba leyendo correctamente o estaba vacío en ese momento.
+            </p>
+            <img src="img/5.jpg" alt="Error Index Out of Range" class="terminal-img">
+        </div>
+    </div>
+
+    <!-- Paso 6: Error Batch -->
+    <div class="step-card">
+        <div class="step-header">
+            <span class="step-number">6</span>
+            <span class="step-title">Error de Batch Size</span>
+            <span class="tag tag-error">Error</span>
+        </div>
+        <div class="step-content">
+            <p class="step-description">
+                Al corregir la carga, surge un <code>ValueError</code>. El modelo requiere un <code>batch_size=2</code> mínimo, pero el dataset de prueba solo tenía 1 ejemplo.
+            </p>
+            <img src="img/6.jpg" alt="Error Batch Size" class="terminal-img">
+        </div>
+    </div>
+
+    <!-- Paso 7: Solución -->
+    <div class="step-card">
+        <div class="step-header">
+            <span class="step-number">7</span>
+            <span class="step-title">Solución: Ampliación del Dataset</span>
+            <span class="tag tag-fix">Fix</span>
+        </div>
+        <div class="step-content">
+            <p class="step-description">
+                Se añaden más ejemplos al archivo <code>train.jsonl</code> mediante comandos <code>echo</code> para cumplir con los requisitos mínimos del batch size.
+            </p>
+            <img src="img/7.jpg" alt="Añadiendo datos al dataset" class="terminal-img">
+        </div>
+    </div>
+
+    <!-- Paso 8: Éxito -->
+    <div class="step-card">
+        <div class="step-header">
+            <span class="step-number">8</span>
+            <span class="step-title">Entrenamiento Exitoso</span>
+            <span class="tag tag-success">Success</span>
+        </div>
+        <div class="step-content">
+            <p class="step-description">
+                Ejecución correcta del script <code>mlx_lm.lora</code>. Se completan las 50 iteraciones, la pérdida (loss) baja a 3.600 y se guardan los pesos (adapters) en <code>my-gemma-lora</code>.
+            </p>
+            <img src="img/8.jpg" alt="Entrenamiento completado" class="terminal-img">
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 - Trabajo Práctico ASIR</p>
+    </footer>
+</div>
+
+</body>
+</html>
