@@ -8,7 +8,7 @@
         :root {
             --bg-color: #0d1117;
             --text-color: #c9d1d9;
-            --accent-color: #d29922; /* Color naranja amarillento */
+            --accent-color: #d29922;
             --card-bg: #161b22;
             --border-color: #30363d;
             --success-color: #238636;
@@ -124,93 +124,108 @@
         <p style="font-size: 0.9em; color: #8b949e;">Módulo: ASIR | Herramienta: llama.cpp</p>
     </header>
 
-    <!-- Paso 1: Archivos -->
+    <!-- Paso 1 -->
     <div class="step-card">
         <div class="step-header">
             <span class="step-number">1</span>
-            <span class="step-title">Preparación de Modelos</span>
-            <span class="tag tag-setup">Setup</span>
+            <span class="step-title">Modelos Base</span>
+            <span class="tag tag-setup">Inicio</span>
         </div>
         <div class="step-content">
             <p class="step-description">
-                Verificación de los archivos iniciales. Disponemos del modelo <code>qwen2.5-0.5b-instruct</code> tanto en formato fp16 (precisión completa) como una versión ya cuantizada previamente (q4_k_m).
+                Verificación de los archivos de modelo base disponibles antes de comenzar el proceso de optimización.
             </p>
-            <img src="img/1.jpeg" alt="Lista de archivos GGUF" class="terminal-img">
+            <img src="img/1.jpeg" alt="Modelos iniciales" class="terminal-img">
         </div>
     </div>
 
-    <!-- Paso 2: Conversión -->
+    <!-- Paso 2 -->
     <div class="step-card">
         <div class="step-header">
             <span class="step-number">2</span>
-            <span class="step-title">Proceso de Cuantización</span>
+            <span class="step-title">Ejecución de Cuantización</span>
             <span class="tag tag-process">Proceso</span>
         </div>
         <div class="step-content">
             <p class="step-description">
-                Ejecución de la herramienta de conversión para transformar el modelo a formato <code>q5_0</code>. Se observa cómo se procesan los tensores bloque a bloque, reduciendo el tamaño del modelo de 1.2GB a aproximadamente 460MB.
+                Inicio del script de conversión. Se procesan las capas del modelo para reducir su precisión a q5_0.
             </p>
-            <img src="img/2.jpeg" alt="Proceso de cuantización en terminal" class="terminal-img">
+            <img src="img/2.jpeg" alt="Inicio conversión" class="terminal-img">
         </div>
     </div>
 
-    <!-- Paso 3: Llama.cpp Build -->
+    <!-- Paso 3 -->
     <div class="step-card">
         <div class="step-header">
             <span class="step-number">3</span>
-            <span class="step-title">Entorno de Ejecución (Build)</span>
-            <span class="tag tag-setup">Configuración</span>
+            <span class="step-title">Finalización y Pesos</span>
+            <span class="tag tag-process">Proceso</span>
         </div>
         <div class="step-content">
             <p class="step-description">
-                Verificación del entorno <code>llama.cpp</code> compilado (build b3557). Se carga el modelo cuantizado <code>qwen2.5-0.5b-instruct-q4_k_m.gguf</code> listo para recibir comandos e instrucciones.
+                Detalle final de la conversión donde se aprecia la reducción de tamaño en los tensores y el cierre exitoso del proceso.
             </p>
-            <img src="img/3.jpeg" alt="Build de llama.cpp cargado" class="terminal-img">
+            <img src="img/3.jpeg" alt="Fin conversión" class="terminal-img">
         </div>
     </div>
 
-    <!-- Paso 4: Inferencia Original -->
+    <!-- Paso 4 -->
     <div class="step-card">
         <div class="step-header">
             <span class="step-number">4</span>
-            <span class="step-title">Prueba 1: Modelo Qwen Original</span>
-            <span class="tag tag-result">Resultado</span>
+            <span class="step-title">Carga en Llama.cpp</span>
+            <span class="tag tag-setup">Setup</span>
         </div>
         <div class="step-content">
             <p class="step-description">
-                Prueba de inferencia preguntando "¿qué es la administración de sistemas?". El modelo genera una respuesta detallada con 10 puntos clave, mostrando buena coherencia y profundidad técnica.
+                Arranque del entorno interactivo de llama.cpp cargando el modelo optimizado.
             </p>
-            <img src="img/4.jpeg" alt="Respuesta del modelo original" class="terminal-img">
+            <img src="img/4.jpeg" alt="Carga modelo" class="terminal-img">
         </div>
     </div>
 
-    <!-- Paso 5: Inferencia Cuantizada -->
+    <!-- Paso 5 -->
     <div class="step-card">
         <div class="step-header">
             <span class="step-number">5</span>
-            <span class="step-title">Prueba 2: Modelo Cuantizado</span>
-            <span class="tag tag-result">Resultado</span>
-        </div>
-        <div class="step-content">
-            <p class="step-description">
-                Misma pregunta al modelo cuantizado. La respuesta mantiene la estructura de 10 puntos y la calidad técnica es muy similar al original, demostrando que la pérdida de precisión apenas afecta a la calidad de la respuesta en este caso.
-            </p>
-            <img src="img/5.jpeg" alt="Respuesta del modelo cuantizado" class="terminal-img">
-        </div>
-    </div>
-
-    <!-- Paso 6: Prueba Rápida -->
-    <div class="step-card">
-        <div class="step-header">
-            <span class="step-number">6</span>
-            <span class="step-title">Prueba de Velocidad (Tokens/s)</span>
+            <span class="step-title">Inferencia: Modelo Original</span>
             <span class="tag tag-result">Benchmark</span>
         </div>
         <div class="step-content">
             <p class="step-description">
-                Prueba final solicitando una definición corta de "Servidor DNS". El modelo responde correctamente a una velocidad muy alta de generación (174 tokens/segundo en el prompt), confirmando la eficiencia del modelo cuantizado.
+                Prueba de control: Respuesta generada por el modelo original (fp16/q8) para establecer una línea base de calidad.
             </p>
-            <img src="img/6.jpeg" alt="Prueba DNS y velocidad" class="terminal-img">
+            <img src="img/5.jpeg" alt="Respuesta Original" class="terminal-img">
+        </div>
+    </div>
+
+    <!-- Paso 6 -->
+    <div class="step-card">
+        <div class="step-header">
+            <span class="step-number">6</span>
+            <span class="step-title">Inferencia: Modelo Cuantizado</span>
+            <span class="tag tag-result">Benchmark</span>
+        </div>
+        <div class="step-content">
+            <p class="step-description">
+                Comparativa: Misma respuesta generada por el modelo comprimido (q5_0). Se mantiene la coherencia con menor consumo de RAM.
+            </p>
+            <img src="img/6.jpeg" alt="Respuesta Cuantizada" class="terminal-img">
+        </div>
+    </div>
+
+    <!-- Paso 7 -->
+    <div class="step-card">
+        <div class="step-header">
+            <span class="step-number">7</span>
+            <span class="step-title">Test de Velocidad</span>
+            <span class="tag tag-result">Final</span>
+        </div>
+        <div class="step-content">
+            <p class="step-description">
+                Prueba de rendimiento (tokens/segundo) con una consulta corta sobre DNS.
+            </p>
+            <img src="img/7.jpeg" alt="Test Velocidad" class="terminal-img">
         </div>
     </div>
 
