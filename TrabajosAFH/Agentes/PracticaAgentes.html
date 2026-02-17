@@ -9,15 +9,14 @@
     body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background:var(--bg); color:var(--text); }
     header, main, footer { max-width: var(--max); margin: 0 auto; padding: 24px; }
     header h1 { margin: 0 0 8px; font-size: 1.6rem; }
-    header p { margin: 0; color: var(--muted); }
+    header p { margin: 0; color: var(--muted); line-height: 1.45; }
     .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px; margin: 16px 0; }
     figure { margin: 0; }
     img { width: 100%; height: auto; border-radius: 10px; display:block; border: 1px solid var(--line); }
     figcaption { margin-top: 10px; color: var(--muted); font-size: 0.95rem; line-height: 1.35; }
-    .meta { margin-top: 10px; display:flex; gap:10px; flex-wrap: wrap; color: var(--muted); font-size: 0.9rem; }
-    .tag { border: 1px solid var(--line); padding: 2px 8px; border-radius: 999px; }
-    footer { color: var(--muted); font-size: 0.9rem; padding-top: 0; }
+    footer { color: var(--muted); font-size: 0.9rem; }
     code { background: rgba(255,255,255,0.06); padding: 2px 6px; border-radius: 6px; }
+    h2 { margin: 0 0 10px; font-size:1.15rem; }
   </style>
 </head>
 
@@ -25,8 +24,7 @@
   <header>
     <h1>Trabajo: Agentes de IA (capturas y explicación)</h1>
     <p>
-      Página estática para GitHub Pages con las capturas del proceso (instalación, configuración y ejecución del agente).
-      GitHub Pages busca un <code>index.html</code> como archivo de entrada. [page:1]
+      En esta página muestro las capturas de mi práctica sobre agentes de IA, explicando qué se hace en cada paso (instalación, configuración y prueba).
     </p>
   </header>
 
@@ -41,10 +39,6 @@
           de configuración (<code>~/.config/opencode</code>), dejando listo el sistema para definir la configuración en un archivo
           <code>config.json</code>.
         </figcaption>
-        <div class="meta">
-          <span class="tag">Archivo: img/1.jpg</span>
-          <span class="tag">Formato: JPG</span>
-        </div>
       </figure>
     </section>
 
@@ -58,10 +52,6 @@
           (por ejemplo <code>qwen2.5-coder:7b</code>), incluyendo la URL del servicio local (<code>127.0.0.1</code>) para que el agente pueda
           enviarle las peticiones de generación.
         </figcaption>
-        <div class="meta">
-          <span class="tag">Archivo: img/2.jpg</span>
-          <span class="tag">Formato: JPG</span>
-        </div>
       </figure>
     </section>
 
@@ -75,10 +65,6 @@
           <code>opencode</code>. Esto inicia la herramienta con la configuración definida anteriormente, lista para ejecutar tareas del agente
           dentro del contexto del proyecto.
         </figcaption>
-        <div class="meta">
-          <span class="tag">Archivo: img/3.jpg</span>
-          <span class="tag">Formato: JPG</span>
-        </div>
       </figure>
     </section>
 
@@ -92,27 +78,27 @@
           invoca una <em>skill</em> o capacidad (p. ej. <code>storytelling</code>) para generar la respuesta. También se aprecia el uso de
           recursos (como el historial de GPU), lo que sirve para evidenciar que el modelo local está trabajando durante la generación.
         </figcaption>
-        <div class="meta">
-          <span class="tag">Archivo: img/4.jpg</span>
-          <span class="tag">Formato: JPG</span>
-        </div>
       </figure>
     </section>
 
-    <section class="card">
-      <h2 style="margin:0 0 10px; font-size:1.15rem;">Estructura recomendada en GitHub</h2>
-      <p style="margin:0; color: var(--muted); line-height: 1.35;">
-        Coloca este archivo como <code>index.html</code> en la raíz del repositorio, y crea la carpeta <code>img/</code> con las imágenes:
-        <code>img/1.jpg</code>, <code>img/2.jpg</code>, <code>img/3.jpg</code>, <code>img/4.jpg</code>. GitHub Pages publicará archivos
-        estáticos y usará <code>index.html</code> como entrada. [page:1]
+    <section class="card" id="conclusion">
+      <h2>Conclusión</h2>
+      <p style="margin:0 0 10px; color: var(--muted); line-height: 1.45;">
+        En esta práctica he aprendido a montar un entorno para trabajar con un agente de IA en local, desde la instalación con <code>npm</code>
+        hasta dejarlo bien configurado con su archivo <code>config.json</code>. Lo que más me ha quedado claro es que, aunque “parezca magia”,
+        al final esto va de tener bien definidos el proveedor, el modelo y el flujo de ejecución para que el agente haga la tarea sin fallos.
+      </p>
+      <p style="margin:0; color: var(--muted); line-height: 1.45;">
+        Como estudiante de ASIR, me ha servido para ver la parte más real: rutas de configuración, comandos, estructura de proyecto y cómo
+        comprobar que el sistema realmente está trabajando mientras genera. En resumen, me llevo una base bastante sólida para repetir el proceso
+        en otra máquina, cambiar de modelo si hace falta, y entender mejor cómo se integra un agente de IA en un entorno de trabajo real.
       </p>
     </section>
   </main>
 
   <footer>
     <p style="margin:0;">
-      Nota: si activas GitHub Pages (Settings → Pages), puedes obtener un enlace público tipo
-      <code>https://usuario.github.io/repositorio/</code>. [page:1]
+      Entrada del sitio: <code>index.html</code>. [page:1]
     </p>
   </footer>
 </body>
