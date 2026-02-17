@@ -1,238 +1,129 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reporte Cuantización Llama.cpp - ASIR</title>
-    <style>
-        :root {
-            --bg-color: #0d1117;
-            --text-color: #c9d1d9;
-            --accent-color: #d29922;
-            --card-bg: #161b22;
-            --border-color: #30363d;
-            --success-color: #238636;
-            --info-color: #1f6feb;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            line-height: 1.6;
-            margin: 0;
-            padding: 20px;
-        }
-
-        header {
-            text-align: center;
-            padding: 40px 0;
-            border-bottom: 1px solid var(--border-color);
-            margin-bottom: 40px;
-        }
-
-        h1 {
-            color: var(--accent-color);
-            margin-bottom: 10px;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .step-card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            margin-bottom: 40px;
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-        }
-
-        .step-header {
-            padding: 15px 20px;
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            background-color: #21262d;
-        }
-
-        .step-number {
-            background-color: var(--accent-color);
-            color: #fff;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            margin-right: 15px;
-        }
-
-        .step-title {
-            font-weight: 600;
-            font-size: 1.1em;
-            color: #fff;
-        }
-
-        .step-content {
-            padding: 20px;
-        }
-
-        .step-description {
-            margin-bottom: 20px;
-            font-size: 0.95em;
-        }
-
-        .terminal-img {
-            width: 100%;
-            height: auto;
-            border-radius: 4px;
-            border: 1px solid var(--border-color);
-            display: block;
-        }
-
-        .tag {
-            display: inline-block;
-            padding: 2px 8px;
-            border-radius: 12px;
-            font-size: 0.75em;
-            font-weight: 600;
-            margin-left: auto;
-        }
-
-        .tag-setup { background-color: var(--info-color); color: #fff; }
-        .tag-process { background-color: #8b949e; color: #fff; }
-        .tag-result { background-color: var(--success-color); color: #fff; }
-
-        footer {
-            text-align: center;
-            margin-top: 60px;
-            color: #8b949e;
-            font-size: 0.8em;
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Práctica: Cuantización (Capturas)</title>
+  <style>
+    :root { --max: 980px; --bg:#0b0f17; --card:#121a2a; --text:#e8eefc; --muted:#b9c3da; --line:#26324a; }
+    body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background:var(--bg); color:var(--text); }
+    header, main, footer { max-width: var(--max); margin: 0 auto; padding: 24px; }
+    header h1 { margin: 0 0 8px; font-size: 1.6rem; }
+    header p { margin: 0; color: var(--muted); line-height: 1.45; }
+    .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px; margin: 16px 0; }
+    figure { margin: 0; }
+    img { width: 100%; height: auto; border-radius: 10px; display:block; border: 1px solid var(--line); }
+    figcaption { margin-top: 10px; color: var(--muted); font-size: 0.95rem; line-height: 1.35; }
+    footer { color: var(--muted); font-size: 0.9rem; }
+    code { background: rgba(255,255,255,0.06); padding: 2px 6px; border-radius: 6px; }
+    h2 { margin: 0 0 10px; font-size:1.15rem; }
+  </style>
 </head>
+
 <body>
+  <header>
+    <h1>Práctica: Cuantización (capturas y explicación)</h1>
+    <p>
+      En esta práctica se trabaja con modelos en formato GGUF y se aplica cuantización (por ejemplo <code>q4_k_m</code>) para reducir memoria
+      y facilitar la ejecución local, asumiendo el típico trade-off: menos tamaño y normalmente más velocidad, a costa de algo de calidad. 
+      La herramienta <code>llama-quantize</code> (llama.cpp) permite convertir un GGUF de alta precisión a un GGUF cuantizado. [web:53]
+    </p>
+  </header>
 
-<div class="container">
-    <header>
-        <h1>Práctica Cuantización con llama.cpp</h1>
-        <p>Optimización y conversión de modelos GGUF para inferencia local</p>
-        <p style="font-size: 0.9em; color: #8b949e;">Módulo: ASIR | Herramienta: llama.cpp</p>
-    </header>
+  <main>
+    <!-- 1 -->
+    <section class="card" id="captura-1">
+      <figure>
+        <img src="img/1.jpeg" alt="Captura 1: listado de modelos GGUF y tamaños (fp16 y q4_k_m)" loading="lazy">
+        <figcaption>
+          <strong>Captura 1 — Modelos y tamaños.</strong>
+          Aquí se ven los archivos GGUF disponibles y su tamaño, comparando el modelo en <code>fp16</code> (más pesado) con el cuantizado
+          <code>q4_k_m</code> (más ligero). Esta es la evidencia rápida de que la cuantización reduce el peso del modelo para que sea más
+          manejable en local.
+        </figcaption>
+      </figure>
+    </section>
 
-    <!-- Paso 1 -->
-    <div class="step-card">
-        <div class="step-header">
-            <span class="step-number">1</span>
-            <span class="step-title">Modelos Base</span>
-            <span class="tag tag-setup">Inicio</span>
-        </div>
-        <div class="step-content">
-            <p class="step-description">
-                Verificación de los archivos de modelo base disponibles antes de comenzar el proceso de optimización.
-            </p>
-            <img src="img/1.jpeg" alt="Modelos iniciales" class="terminal-img">
-        </div>
-    </div>
+    <!-- 2 -->
+    <section class="card" id="captura-2">
+      <figure>
+        <img src="img/2.jpeg" alt="Captura 2: proceso de cuantización en llama.cpp" loading="lazy">
+        <figcaption>
+          <strong>Captura 2 — Proceso de cuantización.</strong>
+          En esta parte se ejecuta la cuantización con llama.cpp y aparecen logs del tipo <code>llama_model_quantize_impl</code>, donde se van
+          convirtiendo tensores y aplicando la cuantización objetivo. Al final se obtiene el modelo cuantizado (por ejemplo <code>q4_k_m</code>)
+          listo para inferencia. [web:53]
+        </figcaption>
+      </figure>
+    </section>
 
-    <!-- Paso 2 -->
-    <div class="step-card">
-        <div class="step-header">
-            <span class="step-number">2</span>
-            <span class="step-title">Ejecución de Cuantización</span>
-            <span class="tag tag-process">Proceso</span>
-        </div>
-        <div class="step-content">
-            <p class="step-description">
-                Inicio del script de conversión. Se procesan las capas del modelo para reducir su precisión a q5_0.
-            </p>
-            <img src="img/2.jpeg" alt="Inicio conversión" class="terminal-img">
-        </div>
-    </div>
+    <!-- 3 -->
+    <section class="card" id="captura-3">
+      <figure>
+        <img src="img/3.jpeg" alt="Captura 3: ejecución en llama.cpp con modelo fp16 y pregunta de prueba" loading="lazy">
+        <figcaption>
+          <strong>Captura 3 — Prueba con el modelo original (fp16).</strong>
+          Se arranca <code>llama.cpp</code> cargando el GGUF en <code>fp16</code> y se lanza una pregunta corta para validar que el modelo
+          responde correctamente. Esto sirve como referencia base antes de comparar con el cuantizado (misma pregunta, mismo contexto).
+        </figcaption>
+      </figure>
+    </section>
 
-    <!-- Paso 3 -->
-    <div class="step-card">
-        <div class="step-header">
-            <span class="step-number">3</span>
-            <span class="step-title">Finalización y Pesos</span>
-            <span class="tag tag-process">Proceso</span>
-        </div>
-        <div class="step-content">
-            <p class="step-description">
-                Detalle final de la conversión donde se aprecia la reducción de tamaño en los tensores y el cierre exitoso del proceso.
-            </p>
-            <img src="img/3.jpeg" alt="Fin conversión" class="terminal-img">
-        </div>
-    </div>
+    <!-- 4 -->
+    <section class="card" id="captura-4">
+      <figure>
+        <img src="img/4.jpeg" alt="Captura 4: respuesta larga del modelo original" loading="lazy">
+        <figcaption>
+          <strong>Captura 4 — Salida del modelo original (referencia).</strong>
+          Aquí se ve una respuesta más larga del modelo “original”, útil para comparar la estructura del texto, el detalle y la coherencia con
+          el resultado del modelo cuantizado. La idea es comprobar si la reducción de precisión afecta mucho o si se mantiene una calidad
+          aceptable para el uso que queremos.
+        </figcaption>
+      </figure>
+    </section>
 
-    <!-- Paso 4 -->
-    <div class="step-card">
-        <div class="step-header">
-            <span class="step-number">4</span>
-            <span class="step-title">Carga en Llama.cpp</span>
-            <span class="tag tag-setup">Setup</span>
-        </div>
-        <div class="step-content">
-            <p class="step-description">
-                Arranque del entorno interactivo de llama.cpp cargando el modelo optimizado.
-            </p>
-            <img src="img/4.jpeg" alt="Carga modelo" class="terminal-img">
-        </div>
-    </div>
+    <!-- 5 -->
+    <section class="card" id="captura-5">
+      <figure>
+        <img src="img/5.jpeg" alt="Captura 5: ejecución en llama.cpp con modelo cuantizado q4_k_m y la misma pregunta" loading="lazy">
+        <figcaption>
+          <strong>Captura 5 — Prueba con el modelo cuantizado (q4_k_m).</strong>
+          Se repite la prueba, pero cargando el GGUF cuantizado <code>q4_k_m</code>. Esto permite comparar directamente contra el <code>fp16</code>
+          (tiempo de respuesta, fluidez y si mantiene la idea principal), que es justo el objetivo práctico de cuantizar y luego validar. [web:53]
+        </figcaption>
+      </figure>
+    </section>
 
-    <!-- Paso 5 -->
-    <div class="step-card">
-        <div class="step-header">
-            <span class="step-number">5</span>
-            <span class="step-title">Inferencia: Modelo Original</span>
-            <span class="tag tag-result">Benchmark</span>
-        </div>
-        <div class="step-content">
-            <p class="step-description">
-                Prueba de control: Respuesta generada por el modelo original (fp16/q8) para establecer una línea base de calidad.
-            </p>
-            <img src="img/5.jpeg" alt="Respuesta Original" class="terminal-img">
-        </div>
-    </div>
+    <!-- 6 -->
+    <section class="card" id="captura-6">
+      <figure>
+        <img src="img/6.jpeg" alt="Captura 6: respuesta larga del modelo cuantizado" loading="lazy">
+        <figcaption>
+          <strong>Captura 6 — Salida del modelo cuantizado.</strong>
+          En esta última parte se observa la respuesta del modelo cuantizado en un ejemplo largo, para comparar con la captura del modelo original.
+          Si el contenido se mantiene razonablemente bien, significa que la cuantización ha merecido la pena: menor consumo y un resultado aún útil
+          para tareas normales.
+        </figcaption>
+      </figure>
+    </section>
 
-    <!-- Paso 6 -->
-    <div class="step-card">
-        <div class="step-header">
-            <span class="step-number">6</span>
-            <span class="step-title">Inferencia: Modelo Cuantizado</span>
-            <span class="tag tag-result">Benchmark</span>
-        </div>
-        <div class="step-content">
-            <p class="step-description">
-                Comparativa: Misma respuesta generada por el modelo comprimido (q5_0). Se mantiene la coherencia con menor consumo de RAM.
-            </p>
-            <img src="img/6.jpeg" alt="Respuesta Cuantizada" class="terminal-img">
-        </div>
-    </div>
+    <section class="card" id="conclusion">
+      <h2>Conclusión</h2>
+      <p style="margin:0 0 10px; color: var(--muted); line-height: 1.45;">
+        Con esta práctica he visto claro por qué se usa tanto la cuantización: al final lo que queremos es poder correr modelos en local sin
+        dejarnos el equipo muerto, y aquí se nota cuando pasas de <code>fp16</code> a un <code>q4_k_m</code> que el tamaño baja bastante.
+        Lo guapo es que no es “cuantizo y ya”, sino que tienes que probarlo con las mismas preguntas y comparar resultados para ver si compensa.
+      </p>
+      <p style="margin:0; color: var(--muted); line-height: 1.45;">
+        Como estudiante de ASIR, me quedo con el enfoque práctico: tener los modelos ordenados, ejecutar por terminal, revisar logs, y validar
+        que el sistema funciona con evidencias (outputs del modelo original vs cuantizado). Me parece una práctica bastante realista porque mezcla
+        administración (archivos, rutas, herramientas) con evaluación básica de calidad en modelos de IA.
+      </p>
+    </section>
+  </main>
 
-    <!-- Paso 7 -->
-    <div class="step-card">
-        <div class="step-header">
-            <span class="step-number">7</span>
-            <span class="step-title">Test de Velocidad</span>
-            <span class="tag tag-result">Final</span>
-        </div>
-        <div class="step-content">
-            <p class="step-description">
-                Prueba de rendimiento (tokens/segundo) con una consulta corta sobre DNS.
-            </p>
-            <img src="img/7.jpeg" alt="Test Velocidad" class="terminal-img">
-        </div>
-    </div>
-
-    <footer>
-        <p>&copy; 2026 - Prácticas ASIR | Inteligencia Artificial</p>
-    </footer>
-</div>
-
+  <footer>
+    <p style="margin:0;">Práctica documentada con capturas.</p>
+  </footer>
 </body>
 </html>
