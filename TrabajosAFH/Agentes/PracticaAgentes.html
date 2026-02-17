@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Trabajo: Agentes de IA (Capturas)</title>
+  <style>
+    :root { --max: 980px; --bg:#0b0f17; --card:#121a2a; --text:#e8eefc; --muted:#b9c3da; --line:#26324a; }
+    body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background:var(--bg); color:var(--text); }
+    header, main, footer { max-width: var(--max); margin: 0 auto; padding: 24px; }
+    header h1 { margin: 0 0 8px; font-size: 1.6rem; }
+    header p { margin: 0; color: var(--muted); }
+    .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px; margin: 16px 0; }
+    figure { margin: 0; }
+    img { width: 100%; height: auto; border-radius: 10px; display:block; border: 1px solid var(--line); }
+    figcaption { margin-top: 10px; color: var(--muted); font-size: 0.95rem; line-height: 1.35; }
+    .meta { margin-top: 10px; display:flex; gap:10px; flex-wrap: wrap; color: var(--muted); font-size: 0.9rem; }
+    .tag { border: 1px solid var(--line); padding: 2px 8px; border-radius: 999px; }
+    footer { color: var(--muted); font-size: 0.9rem; padding-top: 0; }
+    code { background: rgba(255,255,255,0.06); padding: 2px 6px; border-radius: 6px; }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Trabajo: Agentes de IA (capturas y explicación)</h1>
+    <p>
+      Página estática para GitHub Pages con las capturas del proceso (instalación, configuración y ejecución del agente).
+      GitHub Pages busca un <code>index.html</code> como archivo de entrada. [page:1]
+    </p>
+  </header>
+
+  <main>
+    <!-- CAPTURA 1 -->
+    <section class="card" id="captura-1">
+      <figure>
+        <img src="img/1.jpg" alt="Captura 1: instalación de opencode-ai y creación de carpeta de configuración" loading="lazy">
+        <figcaption>
+          <strong>Captura 1 — Instalación y preparación del entorno.</strong>
+          En esta parte se instala la herramienta <code>opencode-ai</code> de forma global con <code>npm</code> y después se crea el directorio
+          de configuración (<code>~/.config/opencode</code>), dejando listo el sistema para definir la configuración en un archivo
+          <code>config.json</code>.
+        </figcaption>
+        <div class="meta">
+          <span class="tag">Archivo: img/1.jpg</span>
+          <span class="tag">Formato: JPG</span>
+        </div>
+      </figure>
+    </section>
+
+    <!-- CAPTURA 2 -->
+    <section class="card" id="captura-2">
+      <figure>
+        <img src="img/2.jpg" alt="Captura 2: edición del archivo ~/.config/opencode/config.json con proveedor Ollama y modelo qwen2.5-coder:7b" loading="lazy">
+        <figcaption>
+          <strong>Captura 2 — Configuración del proveedor y el modelo.</strong>
+          Aquí se edita el archivo <code>~/.config/opencode/config.json</code> para indicar el proveedor (Ollama en local) y el modelo a usar
+          (por ejemplo <code>qwen2.5-coder:7b</code>), incluyendo la URL del servicio local (<code>127.0.0.1</code>) para que el agente pueda
+          enviarle las peticiones de generación.
+        </figcaption>
+        <div class="meta">
+          <span class="tag">Archivo: img/2.jpg</span>
+          <span class="tag">Formato: JPG</span>
+        </div>
+      </figure>
+    </section>
+
+    <!-- CAPTURA 3 -->
+    <section class="card" id="captura-3">
+      <figure>
+        <img src="img/3.jpg" alt="Captura 3: ejecución del comando opencode desde el directorio del proyecto" loading="lazy">
+        <figcaption>
+          <strong>Captura 3 — Ejecución desde el proyecto.</strong>
+          Se accede al directorio del trabajo (por ejemplo una carpeta llamada <code>AgenteIA</code>) y se lanza el comando
+          <code>opencode</code>. Esto inicia la herramienta con la configuración definida anteriormente, lista para ejecutar tareas del agente
+          dentro del contexto del proyecto.
+        </figcaption>
+        <div class="meta">
+          <span class="tag">Archivo: img/3.jpg</span>
+          <span class="tag">Formato: JPG</span>
+        </div>
+      </figure>
+    </section>
+
+    <!-- CAPTURA 4 -->
+    <section class="card" id="captura-4">
+      <figure>
+        <img src="img/4.jpg" alt="Captura 4: agente ejecutando una tarea de storytelling y monitorización de GPU" loading="lazy">
+        <figcaption>
+          <strong>Captura 4 — Prueba del agente y uso de recursos.</strong>
+          En esta pantalla se ve una ejecución real del agente: se introduce una petición (por ejemplo “cuéntame un cuento”) y el sistema
+          invoca una <em>skill</em> o capacidad (p. ej. <code>storytelling</code>) para generar la respuesta. También se aprecia el uso de
+          recursos (como el historial de GPU), lo que sirve para evidenciar que el modelo local está trabajando durante la generación.
+        </figcaption>
+        <div class="meta">
+          <span class="tag">Archivo: img/4.jpg</span>
+          <span class="tag">Formato: JPG</span>
+        </div>
+      </figure>
+    </section>
+
+    <section class="card">
+      <h2 style="margin:0 0 10px; font-size:1.15rem;">Estructura recomendada en GitHub</h2>
+      <p style="margin:0; color: var(--muted); line-height: 1.35;">
+        Coloca este archivo como <code>index.html</code> en la raíz del repositorio, y crea la carpeta <code>img/</code> con las imágenes:
+        <code>img/1.jpg</code>, <code>img/2.jpg</code>, <code>img/3.jpg</code>, <code>img/4.jpg</code>. GitHub Pages publicará archivos
+        estáticos y usará <code>index.html</code> como entrada. [page:1]
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    <p style="margin:0;">
+      Nota: si activas GitHub Pages (Settings → Pages), puedes obtener un enlace público tipo
+      <code>https://usuario.github.io/repositorio/</code>. [page:1]
+    </p>
+  </footer>
+</body>
+</html>
