@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Práctica: Destilación</title>
+  <style>
+    :root { --max: 980px; --bg:#0b0f17; --card:#121a2a; --text:#e8eefc; --muted:#b9c3da; --line:#26324a; }
+    body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background:var(--bg); color:var(--text); }
+    header, main, footer { max-width: var(--max); margin: 0 auto; padding: 24px; }
+    header h1 { margin: 0 0 8px; font-size: 1.6rem; }
+    header p { margin: 0; color: var(--muted); line-height: 1.45; }
+    .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px; margin: 16px 0; }
+    figure { margin: 0; }
+    img { width: 100%; height: auto; border-radius: 10px; display:block; border: 1px solid var(--line); }
+    figcaption { margin-top: 10px; color: var(--muted); font-size: 0.95rem; line-height: 1.35; }
+    footer { color: var(--muted); font-size: 0.9rem; }
+    code { background: rgba(255,255,255,0.06); padding: 2px 6px; border-radius: 6px; }
+    h2 { margin: 0 0 10px; font-size:1.15rem; }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Práctica: “Destilación</h1>
+    <p>
+      En esta práctica se comparan dos modelos de lenguaje (uno hace de “profesor” y otro de “estudiante”) y se mide qué tan parecidas son
+      sus predicciones con una métrica de divergencia KL, además de probar un script de preguntas para ver cuál responde mejor.
+    </p>
+  </header>
+
+  <main>
+    <!-- CAPTURA 1 -->
+    <section class="card" id="captura-1">
+      <figure>
+        <img src="img/1.png" alt="Captura 1: instalación de dependencias con pip (torch, transformers, accelerate)" loading="lazy">
+        <figcaption>
+          <strong>Captura 1 — Preparación del entorno (dependencias).</strong>
+          Aquí instalo las librerías necesarias en Python para poder cargar y ejecutar modelos: <code>torch</code> (cálculo y ejecución),
+          <code>transformers</code> (carga de modelos/tokenizers) y <code>accelerate</code> (gestión de ejecución y rendimiento).
+          Con esto dejo el entorno listo para correr los scripts de la práctica.
+        </figcaption>
+      </figure>
+    </section>
+
+    <!-- CAPTURA 2 -->
+    <section class="card" id="captura-2">
+      <figure>
+        <img src="img/2.png" alt="Captura 2: ejecución de medir_kl.py cargando modelos profesor y estudiante y calculando divergencia KL" loading="lazy">
+        <figcaption>
+          <strong>Captura 2 — Carga de modelos y cálculo de KL.</strong>
+          En esta parte ejecuto el script <code>medir_kl.py</code> dentro del entorno virtual, y se ve cómo descarga/carga el tokenizador y los
+          dos modelos (uno “profesor” y otro “estudiante”). Después calcula la divergencia KL para una frase concreta, dejando un resultado
+          numérico que sirve para cuantificar cuánto se parecen (o se alejan) las distribuciones de probabilidad entre ambos.
+        </figcaption>
+      </figure>
+    </section>
+
+    <!-- CAPTURA 3 -->
+    <section class="card" id="captura-3">
+      <figure>
+        <img src="img/3.png" alt="Captura 3: salida con predicciones top-10 del profesor y del estudiante y resultado de divergencia KL" loading="lazy">
+        <figcaption>
+          <strong>Captura 3 — Comparación de predicciones (Top‑10).</strong>
+          Aquí se muestra el “top‑10” de tokens/palabras que predice el modelo profesor y el modelo estudiante, cada uno con su probabilidad.
+          La idea es ver de forma visual si el estudiante “piensa parecido” al profesor en el siguiente token, y junto con la KL te ayuda a
+          justificar si la destilación está funcionando o si el estudiante está todavía lejos.
+        </figcaption>
+      </figure>
+    </section>
+
+    <!-- CAPTURA 4 -->
+    <section class="card" id="captura-4">
+      <figure>
+        <img src="img/4.png" alt="Captura 4: script de preguntas comparando respuestas de profesor y alumno y resultado final" loading="lazy">
+        <figcaption>
+          <strong>Captura 4 — Test de preguntas (profesor vs alumno).</strong>
+          En este paso ejecuto un script tipo cuestionario donde se lanzan varias preguntas y se evalúa si las respuestas del “alumno”
+          coinciden o no con las del “profesor” (se ven aciertos, fallos y empates). Esto sirve como prueba práctica para comprobar el rendimiento
+          final: no solo un número (KL), sino si el modelo estudiante responde bien en un conjunto de preguntas.
+        </figcaption>
+      </figure>
+    </section>
+
+    <section class="card" id="conclusion">
+      <h2>Conclusión</h2>
+      <p style="margin:0 0 10px; color: var(--muted); line-height: 1.45;">
+        Con esta práctica he entendido mejor lo que hay detrás de la “destilación” de modelos: no es solo bajar el tamaño y ya, sino comparar
+        de verdad cómo predice el modelo pequeño frente al grande. Entre instalar dependencias, levantar el entorno y ejecutar los scripts,
+        me ha quedado claro que la parte importante es poder medir y justificar resultados (por ejemplo con KL y con pruebas de preguntas).
+      </p>
+      <p style="margin:0; color: var(--muted); line-height: 1.45;">
+        También me ha servido para practicar un flujo bastante real: entorno virtual, dependencias, ejecución por terminal, outputs claros y
+        comprobación de fallos/empates. Como estudiante de ASIR, me mola porque al final es lo mismo de siempre: montar bien el entorno,
+        automatizar pruebas y sacar evidencias para demostrar que lo que has hecho funciona.
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    <p style="margin:0;">Práctica documentada con capturas.</p>
+  </footer>
+</body>
+</html>
