@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Práctica: Crear LLM (Capturas)</title>
+  <style>
+    :root { --max: 980px; --bg:#0b0f17; --card:#121a2a; --text:#e8eefc; --muted:#b9c3da; --line:#26324a; }
+    body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background:var(--bg); color:var(--text); }
+    header, main, footer { max-width: var(--max); margin: 0 auto; padding: 24px; }
+    header h1 { margin: 0 0 8px; font-size: 1.6rem; }
+    header p { margin: 0; color: var(--muted); line-height: 1.45; }
+    .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px; margin: 16px 0; }
+    figure { margin: 0; }
+    img { width: 100%; height: auto; border-radius: 10px; display:block; border: 1px solid var(--line); }
+    figcaption { margin-top: 10px; color: var(--muted); font-size: 0.95rem; line-height: 1.35; }
+    footer { color: var(--muted); font-size: 0.9rem; }
+    code { background: rgba(255,255,255,0.06); padding: 2px 6px; border-radius: 6px; }
+    h2 { margin: 0 0 10px; font-size:1.15rem; }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Práctica: Crear LLM (capturas y explicación)</h1>
+    <p>
+      En esta práctica se prepara un mini “chef-bot” afinando un modelo con Axolotl usando un dataset propio en formato
+      <code>.jsonl</code> y una configuración en <code>YAML</code>. Axolotl permite lanzar el entrenamiento desde CLI (por ejemplo
+      <code>axolotl.cli.train</code>) y es habitual ejecutarlo con <code>accelerate</code>. [web:71]
+    </p>
+  </header>
+
+  <main>
+    <!-- CAPTURA 1 -->
+    <section class="card" id="captura-1">
+      <figure>
+        <img src="img/1.png" alt="Captura 1: creación/edición de config_chef.yml" loading="lazy">
+        <figcaption>
+          <strong>Captura 1 — Creación del archivo de configuración.</strong>
+          Aquí creo el fichero <code>config_chef.yml</code> dentro del proyecto (<code>mi-chef-bot</code>) y lo abro para editarlo.
+          Este YAML es el que define el modelo base, el dataset y los parámetros de entrenamiento que se usarán después al lanzar Axolotl. [web:71]
+        </figcaption>
+      </figure>
+    </section>
+
+    <!-- CAPTURA 2 -->
+    <section class="card" id="captura-2">
+      <figure>
+        <img src="img/2.png" alt="Captura 2: contenido de config_chef.yml con modelo, dataset y LoRA" loading="lazy">
+        <figcaption>
+          <strong>Captura 2 — Configuración del fine-tuning (YAML).</strong>
+          En esta captura se ve el contenido de <code>config_chef.yml</code>: el modelo base (por ejemplo uno tipo Phi/Phi3),
+          el tipo de modelo/tokenizer, el dataset <code>recetas.jsonl</code> en formato instruction/output (estilo Alpaca) y la parte de LoRA
+          (parámetros como <code>lora_r</code>, <code>lora_alpha</code>, etc.). Esta configuración es la “receta” que Axolotl usa para entrenar. [web:71]
+        </figcaption>
+      </figure>
+    </section>
+
+    <!-- CAPTURA 3 -->
+    <section class="card" id="captura-3">
+      <figure>
+        <img src="img/3.png" alt="Captura 3: creación del dataset recetas.jsonl" loading="lazy">
+        <figcaption>
+          <strong>Captura 3 — Preparación del dataset.</strong>
+          Aquí creo el archivo <code>recetas.jsonl</code>, que será el dataset personalizado para el “chef-bot”.
+          La idea es guardar ejemplos de entrenamiento con campos tipo <code>instruction</code> y <code>output</code> para que el modelo aprenda
+          a responder en el formato deseado.
+        </figcaption>
+      </figure>
+    </section>
+
+    <!-- CAPTURA 4 -->
+    <section class="card" id="captura-4">
+      <figure>
+        <img src="img/4.png" alt="Captura 4: ejemplos dentro de recetas.jsonl" loading="lazy">
+        <figcaption>
+          <strong>Captura 4 — Ejemplos de entrenamiento (JSONL).</strong>
+          En esta captura se ven varias entradas dentro de <code>recetas.jsonl</code>, con instrucciones como “tengo pechugas de pollo…”
+          y su salida asociada (la receta/pasos). Esto es clave porque la calidad del fine-tuning depende mucho de que los ejemplos estén bien
+          escritos, sean consistentes y representen el tipo de respuestas que queremos del modelo.
+        </figcaption>
+      </figure>
+    </section>
+
+    <!-- CAPTURA 5 -->
+    <section class="card" id="captura-5">
+      <figure>
+        <img src="img/5.png" alt="Captura 5: intento de ejecutar Axolotl con accelerate y error" loading="lazy">
+        <figcaption>
+          <strong>Captura 5 — Ejecución del entrenamiento y error.</strong>
+          Aquí intento lanzar el entrenamiento con el comando <code>accelerate launch -m axolotl.cli.train config_chef.yml</code>, que es una
+          forma típica de ejecutar Axolotl desde CLI. [web:71]
+          Justo en este punto es cuando aparece el problema: por incompatibilidad de versiones (sobre todo de Python y dependencias del stack de
+          entrenamiento), Axolotl no llega a ejecutarse bien en el entorno y termina fallando al arrancar. En la práctica, esto pasa mucho cuando
+          la versión de Python del entorno no es la que espera la herramienta o cuando alguna librería (Torch/Transformers/otras) no cuadra con esa
+          versión, y el resultado es que el comando no inicia el entrenamiento. [web:76][web:79]
+        </figcaption>
+      </figure>
+    </section>
+
+    <section class="card" id="estado">
+      <h2>Estado de la práctica</h2>
+      <p style="margin:0; color: var(--muted); line-height: 1.45;">
+        Esta práctica está inacabada porque el error de compatibilidad impide ejecutar Axolotl correctamente en este entorno.
+        Aun así, queda documentado todo lo necesario: configuración <code>YAML</code>, dataset <code>JSONL</code> y el comando exacto que se usa
+        para lanzar el entrenamiento. [web:71]
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    <p style="margin:0;">Práctica: Crear LLM (documentación con capturas).</p>
+  </footer>
+</body>
+</html>
