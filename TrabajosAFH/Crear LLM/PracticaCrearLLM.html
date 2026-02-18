@@ -22,7 +22,7 @@
 
 <body>
   <header>
-    <h1>Práctica: Crear LLM (capturas y explicación)</h1>
+    <h1>Práctica: Crear LLM</h1>
     <p>
       En esta práctica se prepara un mini “chef-bot” afinando un modelo con Axolotl usando un dataset propio en formato
       <code>.jsonl</code> y una configuración en <code>YAML</code>. Axolotl permite lanzar el entrenamiento desde CLI (por ejemplo
@@ -37,8 +37,9 @@
         <img src="img/1.png" alt="Captura 1: creación/edición de config_chef.yml" loading="lazy">
         <figcaption>
           <strong>Captura 1 — Creación del archivo de configuración.</strong>
-          Aquí creo el fichero <code>config_chef.yml</code> dentro del proyecto (<code>mi-chef-bot</code>) y lo abro para editarlo.
-          Este YAML es el que define el modelo base, el dataset y los parámetros de entrenamiento que se usarán después al lanzar Axolotl. [web:71]
+         Aquí creo el archivo <code>recetas.jsonl</code>, que será el dataset personalizado para el “chef-bot”.
+          La idea es guardar ejemplos de entrenamiento con campos tipo <code>instruction</code> y <code>output</code> para que el modelo aprenda
+          a responder en el formato deseado.
         </figcaption>
       </figure>
     </section>
@@ -62,9 +63,8 @@
         <img src="img/3.png" alt="Captura 3: creación del dataset recetas.jsonl" loading="lazy">
         <figcaption>
           <strong>Captura 3 — Preparación del dataset.</strong>
-          Aquí creo el archivo <code>recetas.jsonl</code>, que será el dataset personalizado para el “chef-bot”.
-          La idea es guardar ejemplos de entrenamiento con campos tipo <code>instruction</code> y <code>output</code> para que el modelo aprenda
-          a responder en el formato deseado.
+           Aquí creo el fichero <code>config_chef.yml</code> dentro del proyecto (<code>mi-chef-bot</code>) y lo abro para editarlo.
+          Este YAML es el que define el modelo base, el dataset y los parámetros de entrenamiento que se usarán después al lanzar Axolotl. [web:71]
         </figcaption>
       </figure>
     </section>
