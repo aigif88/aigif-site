@@ -50,9 +50,9 @@
         <img src="img/2.png" alt="Captura 2: contenido de config_chef.yml con modelo, dataset y LoRA" loading="lazy">
         <figcaption>
           <strong>Captura 2 — Configuración del fine-tuning (YAML).</strong>
-          En esta captura se ve el contenido de <code>config_chef.yml</code>: el modelo base (por ejemplo uno tipo Phi/Phi3),
-          el tipo de modelo/tokenizer, el dataset <code>recetas.jsonl</code> en formato instruction/output (estilo Alpaca) y la parte de LoRA
-          (parámetros como <code>lora_r</code>, <code>lora_alpha</code>, etc.). Esta configuración es la “receta” que Axolotl usa para entrenar. [web:71]
+          En esta captura se ven varias entradas dentro de <code>recetas.jsonl</code>, con instrucciones como “tengo pechugas de pollo…”
+          y su salida asociada (la receta/pasos). Esto es clave porque la calidad del fine-tuning depende mucho de que los ejemplos estén bien
+          escritos, sean consistentes y representen el tipo de respuestas que queremos del modelo.
         </figcaption>
       </figure>
     </section>
@@ -75,9 +75,9 @@
         <img src="img/4.png" alt="Captura 4: ejemplos dentro de recetas.jsonl" loading="lazy">
         <figcaption>
           <strong>Captura 4 — Ejemplos de entrenamiento (JSONL).</strong>
-          En esta captura se ven varias entradas dentro de <code>recetas.jsonl</code>, con instrucciones como “tengo pechugas de pollo…”
-          y su salida asociada (la receta/pasos). Esto es clave porque la calidad del fine-tuning depende mucho de que los ejemplos estén bien
-          escritos, sean consistentes y representen el tipo de respuestas que queremos del modelo.
+          En esta captura se ve el contenido de <code>config_chef.yml</code>: el modelo base (por ejemplo uno tipo Phi/Phi3),
+          el tipo de modelo/tokenizer, el dataset <code>recetas.jsonl</code> en formato instruction/output (estilo Alpaca) y la parte de LoRA
+          (parámetros como <code>lora_r</code>, <code>lora_alpha</code>, etc.). Esta configuración es la “receta” que Axolotl usa para entrenar. [web:71]
         </figcaption>
       </figure>
     </section>
